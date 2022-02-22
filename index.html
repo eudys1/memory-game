@@ -30,19 +30,28 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title" id="staticBackdropLabel">Instrucciones del juego</h5>
           </div>
           <div class="modal-body">
-            jjjjjjjjjjjjjj
+            <p>Encuentra la carta que signifique lo contrario. </p>
+            <select name="nivel" id="nivel" class="form-select" required="required" onchange="Nivel(this.value)">
+              <option value="" disabled selected>Seleccione el nivel:</option>
+              <option value="8">Fácil</option>
+              <option value="12">Difícil</option>
+            </select>
+            <p id="err" style="color: red; visibility:hidden;">Seleccione un nivel</p>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <div class="modal-footer justify-content-center">
+            <input onclick="DibujaTablero()" type="button" class="btn btn-secondary " value="Jugar" />
           </div>
         </div>
       </div>
     </div>
 
+    <!--  -->
+    <div id="bodyCards">
+
+    </div>
 
 
 
