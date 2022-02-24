@@ -7,6 +7,7 @@ let nCartas;
 let cartas = [];
 let bodyCards = document.getElementById('bodyCards');
 let imagenes;
+let cartaAnterior;
 
 //
 function Nivel(value) {
@@ -71,7 +72,8 @@ function DibujaTablero() {
         
                 card = document.createElement('div');
                 card.className = 'card bg-transparent border-0';
-        
+                card.setAttribute("onclick","cartaFlip(this)");
+
                 imgBack = new Image(190,245);
                 imgBack.className = 'imageBack ';
 
@@ -98,6 +100,7 @@ function DibujaTablero() {
         
         for (let i = 0; i < imagenesBack.length; i++) {
             imagenesBack[i].src = `./img/${cartas[i]}.png`;
+            imagenesBack[i].setAttribute('id',`${cartas[i]}`);
         }
 
         //añade img parte de a tras de la carta
@@ -109,13 +112,30 @@ function DibujaTablero() {
 
     }
 
+    //
 
+
+    //
     $(".card").flip({
         trigger: 'click'
-    });
+      });
     
+    //
+    function GetIdCarta(id) {
+        
+    }
 }
 
 
+function cartaFlip(carta) {
+    let cartaActual = $(carta).find('.back img').attr('id');
 
+    
+    $(carta).flip(false);
+    console.log(carta);
+    console.log(cartaActual);
+
+}
+
+// console.log($(carta).find('.back img').attr('id'));
 
