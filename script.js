@@ -4,16 +4,19 @@ $(document).ready(function () {
 });
 
 let nCartas;
+let win = 0; //contador para saber cuando has acertado todas las cartas
 let cartas = [];
 let bodyCards = document.getElementById("bodyCards");
-let imagenes;
+let imagenesFront;
+let imagenesBack;
 let idCartaAnterior;
 let cartaAnterior;
-let cartaActual;
 let cont = 0;
+let inicioCronometro =0;
 
 //
 function Nivel(value) {
+	
 	nCartas = Number(value);
 
 	//controlar visibilidad error al elegir nivel
@@ -46,6 +49,8 @@ function Nivel(value) {
 
 //
 function DibujaTablero() {
+	init();
+	document.querySelector(".aside").style.visibility="visible";
 	if (document.getElementById("nivel").value == "") {
 		document.getElementById("err").style.visibility = "visible";
 	} else {
@@ -57,13 +62,13 @@ function DibujaTablero() {
 			let row, col, front, card, imgFront, imgBack, back;
 
 			row = document.createElement("div"); //creo fila
-			row.className = "row g-0";
+			row.className = "row";
 
 			for (let i = 1; i <= 4; i++) {
 				//creo columna y lo que lleva dentro
 
 				col = document.createElement("div");
-				col.className = "col-auto m-2";
+				col.className = "col-12 col-sm-6 col-lg-3 ";
 
 				front = document.createElement("div");
 				front.className = "front";
@@ -123,39 +128,117 @@ function DibujaTablero() {
 //
 function cartaFlip(carta) {
 	$(carta).flip(true);
-
+	inicioCronometro += 1;
 	let idCartaActual = $(carta).find(".back img").attr("id");
 
 	if (cont == 0) {
 		cartaAnterior = carta;
 		idCartaAnterior = idCartaActual;
 		cont += 1;
-	} else {
 		
-
+	} else {
 		if (idCartaAnterior == idCartaActual) {
 			$(cartaAnterior).flip(true);
 			idCartaAnterior = "";
 			cont = 0;
+			win += 1;
+			//elimino la funcion de los elementos para evitar errores
+			cartaAnterior.removeAttribute("onclick");
+			carta.removeAttribute("onclick");
 		} else {
-            // girar las cartas
+			// girar las cartas a la vez
 			setTimeout(function () {
-                $(cartaAnterior).flip(false);
+				$(cartaAnterior).flip(false);
 				$(carta).flip(false);
 			}, 1000);
 
 			idCartaAnterior = "";
 			cont = 0;
 		}
-
-		
 	}
 
-	console.log(cont);
+	 
+	if (inicioCronometro == 1) {
+		cronometrar();
+	}
 
-	console.log(carta);
-	console.log("id Actual " + idCartaActual);
-	console.log("id Anterior " + idCartaAnterior);
+	if (win == nCartas/2) {
+		parar();
+	}
+
+
+	// console.log(cont);
+
+	// console.log(carta);
+	// console.log("id Actual " + idCartaActual);
+	// console.log("id Anterior " + idCartaAnterior);
 }
 
-// console.log($(carta).find('.back img').attr('id'));
+//controlar cuando has acertado todas las cartas
+
+//añadir timer
+
+//añadir pista
+
+//reiniciar juego sin recargar la pagina
+
+//cronometro
+function init() {
+	// document.querySelector(".start").addEventListener("click", cronometrar);
+	// document.querySelector(".stop").addEventListener("click", parar);
+	// document.querySelector(".reiniciar").addEventListener("click", reiniciar);
+	h = 0;
+	m = 0;
+	s = 0;
+	document.getElementById("hms").innerHTML = "00:00:00";
+}
+function cronometrar() {
+	escribir();
+	id = setInterval(escribir, 1000);
+	// document.querySelector(".start").removeEventListener("click", cronometrar);
+}
+function escribir() {
+	var hAux, mAux, sAux;
+	s++;
+	if (s > 59) {
+		m++;
+		s = 0;
+	}
+	if (m > 59) {
+		h++;
+		m = 0;
+	}
+	if (h > 24) {
+		h = 0;
+	}
+
+	if (s < 10) {
+		sAux = "0" + s;
+	} else {
+		sAux = s;
+	}
+	if (m < 10) {
+		mAux = "0" + m;
+	} else {
+		mAux = m;
+	}
+	if (h < 10) {
+		hAux = "0" + h;
+	} else {
+		hAux = h;
+	}
+
+	document.getElementById("hms").innerHTML = hAux + ":" + mAux + ":" + sAux;
+}
+function parar() {
+	clearInterval(id);
+	// document.querySelector(".start").addEventListener("click", cronometrar);
+}
+function reiniciar() {
+	clearInterval(id);
+	document.getElementById("hms").innerHTML = "00:00:00";
+	h = 0;
+	m = 0;
+	s = 0;
+	// document.querySelector(".start").addEventListener("click", cronometrar);
+}
