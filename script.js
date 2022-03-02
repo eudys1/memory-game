@@ -3,7 +3,7 @@ $(document).ready(function () {
 	$("#myModal").modal("show");
 });
 
-let nCartas;
+let nCartas; //num de cartas a añadir
 let win = 0; //contador para saber cuando has acertado todas las cartas
 let cartas = [];
 let bodyCards = document.getElementById("bodyCards");
@@ -12,7 +12,7 @@ let imagenesBack;
 let idCartaAnterior;
 let cartaAnterior;
 let cont = 0;
-let inicioCronometro =0;
+let inicioCronometro =0; //cont para saber cuando iniciar el cronometro
 
 //
 function Nivel(value) {
@@ -62,13 +62,13 @@ function DibujaTablero() {
 			let row, col, front, card, imgFront, imgBack, back;
 
 			row = document.createElement("div"); //creo fila
-			row.className = "row";
+			row.className = "row my-2"; //gutter
 
 			for (let i = 1; i <= 4; i++) {
 				//creo columna y lo que lleva dentro
 
 				col = document.createElement("div");
-				col.className = "col-12 col-sm-6 col-lg-3 ";
+				col.className = "col-12 col-sm-6 col-lg-3 "; //margin
 
 				front = document.createElement("div");
 				front.className = "front";
@@ -128,8 +128,17 @@ function DibujaTablero() {
 //
 function cartaFlip(carta) {
 	$(carta).flip(true);
+	// console.log();
 	inicioCronometro += 1;
 	let idCartaActual = $(carta).find(".back img").attr("id");
+
+	//si clickeo en una misma carta
+	if(cartaAnterior == carta){
+		setTimeout(function () {
+			// $(cartaAnterior).flip(false);
+			$(carta).flip(false);
+		}, 200);
+	}
 
 	if (cont == 0) {
 		cartaAnterior = carta;
@@ -137,7 +146,7 @@ function cartaFlip(carta) {
 		cont += 1;
 		
 	} else {
-		if (idCartaAnterior == idCartaActual) {
+		if (idCartaAnterior == idCartaActual && cartaAnterior != carta) {
 			$(cartaAnterior).flip(true);
 			idCartaAnterior = "";
 			cont = 0;
@@ -157,36 +166,42 @@ function cartaFlip(carta) {
 		}
 	}
 
-	 
+	//iniciar cronometro al hacer click en una carta la primera vez 
 	if (inicioCronometro == 1) {
 		cronometrar();
 	}
 
+	//saber cuando has ganado
 	if (win == nCartas/2) {
 		parar();
 	}
 
 
-	// console.log(cont);
-
-	// console.log(carta);
-	// console.log("id Actual " + idCartaActual);
-	// console.log("id Anterior " + idCartaAnterior);
 }
 
 //controlar cuando has acertado todas las cartas
 
-//añadir timer
-
 //añadir pista
+document.querySelector("#pista").addEventListener("click", () =>{
+	cardFlip = document.getElementsByClassName("card");
 
-//reiniciar juego sin recargar la pagina
+	for (let i = 0; i < cartaFlip.length; i++) {
+		if ($(i).data("flip-model").isFlipped == false ) {
+			
+			$(i).flip(true);
+		}
+		
+	}
+	// cardFlip.forEach(carta => {
+		
+	// });
+
+	
+
+})
 
 //cronometro
 function init() {
-	// document.querySelector(".start").addEventListener("click", cronometrar);
-	// document.querySelector(".stop").addEventListener("click", parar);
-	// document.querySelector(".reiniciar").addEventListener("click", reiniciar);
 	h = 0;
 	m = 0;
 	s = 0;
@@ -195,7 +210,6 @@ function init() {
 function cronometrar() {
 	escribir();
 	id = setInterval(escribir, 1000);
-	// document.querySelector(".start").removeEventListener("click", cronometrar);
 }
 function escribir() {
 	var hAux, mAux, sAux;
@@ -232,7 +246,6 @@ function escribir() {
 }
 function parar() {
 	clearInterval(id);
-	// document.querySelector(".start").addEventListener("click", cronometrar);
 }
 function reiniciar() {
 	clearInterval(id);
@@ -240,5 +253,14 @@ function reiniciar() {
 	h = 0;
 	m = 0;
 	s = 0;
-	// document.querySelector(".start").addEventListener("click", cronometrar);
 }
+
+//reiniciar juego sin recargar la pagina
+document.querySelector("#restartGame").addEventListener("click", () =>{
+	document.querySelector("#bodyCards").innerHTML = "";
+	// $("#myModal").modal("show");
+	DibujaTablero();
+	reiniciar();
+
+})
+
