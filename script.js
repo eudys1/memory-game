@@ -62,13 +62,13 @@ function DibujaTablero() {
 			let row, col, front, card, imgFront, imgBack, back;
 
 			row = document.createElement("div"); //creo fila
-			row.className = "row my-2"; //gutter
+			row.className = "row g-0 d-flex align-items-center justify-content-center"; 
 
 			for (let i = 1; i <= 4; i++) {
 				//creo columna y lo que lleva dentro
 
 				col = document.createElement("div");
-				col.className = "col-12 col-sm-6 col-lg-3 "; //margin
+				col.className = "col-12 col-sm-6 col-lg-3 w-auto m-2"; 
 
 				front = document.createElement("div");
 				front.className = "front";
@@ -77,10 +77,10 @@ function DibujaTablero() {
 				card.className = "card bg-transparent border-0";
 				card.setAttribute("onclick", "cartaFlip(this)");
 
-				imgBack = new Image(190, 245);
+				imgBack = new Image(170, 225);
 				imgBack.className = "imageBack ";
 
-				imgFront = new Image(190, 245);
+				imgFront = new Image(170, 225);
 				imgFront.className = "imageFront ";
 
 				back = document.createElement("div");
@@ -182,23 +182,19 @@ function cartaFlip(carta) {
 //controlar cuando has acertado todas las cartas
 
 //añadir pista
-document.querySelector("#pista").addEventListener("click", () =>{
-	cardFlip = document.getElementsByClassName("card");
+// document.querySelector("#pista").addEventListener("click", () =>{
+// 	cardFlip = document.getElementsByClassName("card");
 
-	for (let i = 0; i < cartaFlip.length; i++) {
-		if ($(i).data("flip-model").isFlipped == false ) {
+// 	for (let i = 0; i < cartaFlip.length; i++) {
+// 		if ($(i).data("flip-model").isFlipped == false ) {
 			
-			$(i).flip(true);
-		}
+// 			$(i).flip(true);
+// 		}
 		
-	}
-	// cardFlip.forEach(carta => {
-		
-	// });
-
+// 	}
 	
 
-})
+// })
 
 //cronometro
 function init() {
