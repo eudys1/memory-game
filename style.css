@@ -4,6 +4,11 @@
 	padding: 0;
 }
 
+body{
+	/* !important es para que se sobre escribra sobre los estilos del boostrap */
+	background-color: #afecbeb5 !important; 
+}
+
 @font-face {
 	font-family: alarm;
 	src: url(alarm.ttf);

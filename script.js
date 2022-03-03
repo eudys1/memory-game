@@ -7,13 +7,13 @@ let nCartas; //num de cartas a añadir
 let win = 0; //contador para saber cuando has acertado todas las cartas
 let cartas = [];
 let bodyCards = document.getElementById("bodyCards");
-let imagenesFront;
-let imagenesBack;
+let imagenesFront; //array imagenes front
+let imagenesBack; //array imagenes back
 let idCartaAnterior;
 let cartaAnterior;
 let cont = 0;
 let inicioCronometro =0; //cont para saber cuando iniciar el cronometro
-
+let id;
 //
 function Nivel(value) {
 	
@@ -116,13 +116,11 @@ function DibujaTablero() {
 	}
 
 	//
-
-	//
 	$(".card").flip({
 		trigger: "manual",
 	});
 
-	//
+	
 }
 
 //
@@ -253,10 +251,33 @@ function reiniciar() {
 
 //reiniciar juego sin recargar la pagina
 document.querySelector("#restartGame").addEventListener("click", () =>{
-	document.querySelector("#bodyCards").innerHTML = "";
-	// $("#myModal").modal("show");
-	DibujaTablero();
+	document.getElementById("bodyCards").innerHTML = "";
+	document.querySelector(".aside").style.visibility="hidden";
+
+	//pongo varibles como al principio
+	cartas = [];
+	nCartas = 0;
+	win = 0; 
+	cartas = [];
+	imagenesFront = [];
+	imagenesBack = [];
+	idCartaAnterior ="";
+	cartaAnterior = undefined;
+	cont = 0;
+	inicioCronometro = 0; 
+
+	//"reinicio" el select
+	document.getElementById("nivel").selectedIndex = 0;
+	//muestro el modal
+	$("#myModal").modal("show");
+
+	// if ($("#myModal").is(":visible")) {
+		
+	// 	//reinicio del cronometro
+	// 	reiniciar();
+	// }
 	reiniciar();
+
 
 })
 
