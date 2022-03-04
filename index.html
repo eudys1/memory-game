@@ -29,9 +29,9 @@
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="staticBackdropLabel">Instrucciones del juego</h5>
+						<h5 class="modal-title m-auto" id="staticBackdropLabel">Instrucciones del juego</h5>
 					</div>
-					<div class="modal-body">
+					<div class="modal-body text-center">
 						<p>Encuentra la carta que signifique lo contrario. </p>
 						<select name="nivel" id="nivel" class="form-select mt-5" required="required"
 							onchange="Nivel(this.value)">
@@ -49,6 +49,21 @@
 			</div>
 		</div>
 
+		<!-- Modal de cuando ganas -->
+		<div class="modal fade" id="hasGanado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+			aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content text-center p-4">
+					
+					<h2 class="display-5">Has ganado!!</h2>
+
+					<button class="btn btn-primary restartGame m-4"> Volver a jugar</button>
+					
+				</div>
+			</div>
+		</div>
+
+		<!--  -->
 		<div class="row">
 
 			<div class="col-10 p-4">
@@ -63,7 +78,7 @@
 					<div class="cronometro">
 						<div id="hms"></div>
 					</div>
-					<button id="restartGame" class="btn btn-primary">Jugar de nuevo</button><br>
+					<button id="" class="btn btn-primary restartGame">Jugar de nuevo</button><br>
 					<!-- <button id="pista" class="btn btn-primary">Pista</button> -->
 				</div>
 

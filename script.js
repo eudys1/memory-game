@@ -49,11 +49,13 @@ function Nivel(value) {
 
 //
 function DibujaTablero() {
-	init();
-	document.querySelector(".aside").style.visibility="visible";
 	if (document.getElementById("nivel").value == "") {
 		document.getElementById("err").style.visibility = "visible";
 	} else {
+		//mostrar cronometro si todo va bien
+		init();
+		document.querySelector(".aside").style.visibility="visible";
+
 		//ocultar modal si todo va bien
 		$("#myModal").modal("hide");
 
@@ -74,14 +76,14 @@ function DibujaTablero() {
 				front.className = "front";
 
 				card = document.createElement("div");
-				card.className = "card bg-transparent border-0";
+				card.className = "card bg-transparent border-0 ";
 				card.setAttribute("onclick", "cartaFlip(this)");
 
 				imgBack = new Image(170, 225);
-				imgBack.className = "imageBack ";
+				imgBack.className = "imageBack shadowCustom";
 
 				imgFront = new Image(170, 225);
-				imgFront.className = "imageFront ";
+				imgFront.className = "imageFront shadowCustom";
 
 				back = document.createElement("div");
 				back.className = "back";
@@ -131,12 +133,12 @@ function cartaFlip(carta) {
 	let idCartaActual = $(carta).find(".back img").attr("id");
 
 	//si clickeo en una misma carta
-	if(cartaAnterior == carta){
-		setTimeout(function () {
-			// $(cartaAnterior).flip(false);
-			$(carta).flip(false);
-		}, 200);
-	}
+	// if(cartaAnterior == carta){
+	// 	setTimeout(function () {
+	// 		// $(cartaAnterior).flip(false);
+	// 		$(carta).flip(false);
+	// 	}, 800);
+	// }
 
 	if (cont == 0) {
 		cartaAnterior = carta;
@@ -157,7 +159,7 @@ function cartaFlip(carta) {
 			setTimeout(function () {
 				$(cartaAnterior).flip(false);
 				$(carta).flip(false);
-			}, 1000);
+			}, 800);
 
 			idCartaAnterior = "";
 			cont = 0;
@@ -172,27 +174,12 @@ function cartaFlip(carta) {
 	//saber cuando has ganado
 	if (win == nCartas/2) {
 		parar();
+		$("#hasGanado").modal("show");
 	}
 
 
 }
 
-//controlar cuando has acertado todas las cartas
-
-//añadir pista
-// document.querySelector("#pista").addEventListener("click", () =>{
-// 	cardFlip = document.getElementsByClassName("card");
-
-// 	for (let i = 0; i < cartaFlip.length; i++) {
-// 		if ($(i).data("flip-model").isFlipped == false ) {
-			
-// 			$(i).flip(true);
-// 		}
-		
-// 	}
-	
-
-// })
 
 //cronometro
 function init() {
@@ -250,9 +237,10 @@ function reiniciar() {
 }
 
 //reiniciar juego sin recargar la pagina
-document.querySelector("#restartGame").addEventListener("click", () =>{
+document.querySelector(".restartGame").addEventListener("click", () =>{
 	document.getElementById("bodyCards").innerHTML = "";
 	document.querySelector(".aside").style.visibility="hidden";
+	$("#hasGanado").modal("hide");
 
 	//pongo varibles como al principio
 	cartas = [];
