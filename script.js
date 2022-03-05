@@ -128,17 +128,8 @@ function DibujaTablero() {
 //
 function cartaFlip(carta) {
 	$(carta).flip(true);
-	// console.log();
 	inicioCronometro += 1;
 	let idCartaActual = $(carta).find(".back img").attr("id");
-
-	//si clickeo en una misma carta
-	// if(cartaAnterior == carta){
-	// 	setTimeout(function () {
-	// 		// $(cartaAnterior).flip(false);
-	// 		$(carta).flip(false);
-	// 	}, 800);
-	// }
 
 	if (cont == 0) {
 		cartaAnterior = carta;
@@ -174,7 +165,9 @@ function cartaFlip(carta) {
 	//saber cuando has ganado
 	if (win == nCartas/2) {
 		parar();
-		$("#hasGanado").modal("show");
+		setTimeout( () =>{
+			$("#hasGanado").modal("show");
+		}, 1000)
 	}
 
 
@@ -237,12 +230,13 @@ function reiniciar() {
 }
 
 //reiniciar juego sin recargar la pagina
-document.querySelector(".restartGame").addEventListener("click", () =>{
+function Restart() {
+
 	document.getElementById("bodyCards").innerHTML = "";
 	document.querySelector(".aside").style.visibility="hidden";
 	$("#hasGanado").modal("hide");
 
-	//pongo varibles como al principio
+	//pongo varibles como al inicio
 	cartas = [];
 	nCartas = 0;
 	win = 0; 
@@ -256,16 +250,10 @@ document.querySelector(".restartGame").addEventListener("click", () =>{
 
 	//"reinicio" el select
 	document.getElementById("nivel").selectedIndex = 0;
+	
 	//muestro el modal
 	$("#myModal").modal("show");
-
-	// if ($("#myModal").is(":visible")) {
-		
-	// 	//reinicio del cronometro
-	// 	reiniciar();
-	// }
 	reiniciar();
 
-
-})
+}
 
